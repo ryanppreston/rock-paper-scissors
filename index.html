@@ -1,0 +1,86 @@
+<script>
+    // User and computer start with an initial score of 0
+    let playerScore = 0;
+    let computerScore = 0;
+
+    // Initial round is zero
+    let currentRound = 1;
+    let maxRounds = 5;
+
+    let status = "Please type Rock, Paper, or Scissors";
+    
+    // Create a function to randomly generate a computer play
+    function computerPlay() {
+        let str = "";
+        let i = 0;
+        //generate 1 of 3 (0-2) random options to change i into
+        i = Math.floor(Math.random() * 3);
+        // turn i into a string selection, 0 = rock, 1 = paper, 2 = scissors
+        switch(i) {
+            case 0:
+                str = "rock";
+            break;
+            case 1:
+                str = "paper";
+            break;
+            case 2:
+                str = "scissors";
+            break;
+        }
+        return str;
+    }
+    
+    // Function that plays a round with 2 parameters (player selection
+    // and computer selection) and returns a winner
+    function playRound(playerSelection, computerSelection) {
+        let outcome = "";
+        playerSelection = playerSelection.trim();
+        playerSelection = playerSelection.toLowerCase();
+        
+        //ensure player entered a valid option
+        if(playerSelection != "rock" && playerSelection != "paper" && playerSelection != "scissors"){
+           outcome = "error";
+        } else {
+        if(playerSelection == computerSelection){
+            outcome = "draw";
+        // all lose conditions
+        } else if ((playerSelection == "rock" && computerSelection == "paper") || (playerSelection == "paper" && computerSelection == "scissors") || (playerSelection == "scissors" && computerSelection == "rock")) {
+            outcome = "computer";
+        } else {
+            outcome = "player";
+        }
+       }
+        return outcome;
+        
+    }
+
+/// function game gets a 5 round game going
+    function game() {
+    
+    // Create a loop, as long as current round is under the round limit (5)
+    // prompt the user asking for a choice.  When round limit is reached, 
+    // determine and display the winner
+    
+    for (let i = 0; i < 5; i++) {
+        let playerSelection = prompt("Please select rock, paper, or scissors");
+        let computerSelection = computerPlay();
+        let outcomeMessage = "";
+        let roundWinner = playRound(playerSelection, computerSelection);
+        if (roundWinner == "computer") {
+            computerScore++;
+            outcomeMessage = "Computer Wins! \n"
+
+        } else if (roundWinner == "player") {
+            playerScore++;
+            outcomeMessage = "You Win! \n"
+        } else {
+            outcomeMessage = "Draw! \n"
+        }
+        let msg = "Computer chose " + computerSelection + "\n" + outcomeMessage + "Player: " + playerScore + " / Computer: " + computerScore;
+        console.log(msg);        
+}
+
+    }
+
+
+</script>
